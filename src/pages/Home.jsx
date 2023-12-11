@@ -11,9 +11,9 @@ function Home() {
         return (
             <div className="w-full py-8">
                 <Container>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap justify-center">
                         {posts.map((post) => (
-                            <div key={post.$id} className="p-2 w-1/4">
+                            <div key={post.$id}>
                                 <PostCard {...post} />
                             </div>
                         ))}
@@ -23,18 +23,12 @@ function Home() {
         );
     }
     return (
-        <div className="w-full py-8 mt-4 text-center">
-            <Container>
-                <div className="flex flex-wrap">
-                    <div className="p-2 w-full">
-                        <h1 className="text-2xl font-bold hover:text-gray-500">
-                            Login to read posts
-                        </h1>
-                    </div>
-                </div>
-            </Container>
+        <div className="w-full min-h-[400px] py-8 mt-4 flex justify-center items-center">
+            <h1 className="text-2xl font-bold text-gray-300 hover:text-gray-500">
+                No Posts Avaliable
+            </h1>
         </div>
-    );
+    )
 }
 
 export default Home;
