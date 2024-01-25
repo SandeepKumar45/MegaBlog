@@ -50,7 +50,6 @@ class AuthService {
             return await this.account.get();
         } catch (error) {
             throw error
-            console.log("Appwrite serive :: getCurrentUser :: error", error);
         }
     }
 }

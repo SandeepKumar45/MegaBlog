@@ -4,13 +4,14 @@ const Input = React.forwardRef( function Input({
     label,
     type = "text",
     className = "",
+    labelstyle,
     ...props
 },ref){
     const id = useId()
     return (
         <div className='w-full'>
             {label && <label
-                className='inline-block mb-1 pl-1 text-gray-500 font-semibold'
+                className={`inline-block mb-1 pl-1 text-gray-700 font-semibold ${labelstyle}`}
                 htmlFor={id}
             >
                 {label}

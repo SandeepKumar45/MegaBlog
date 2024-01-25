@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function LogoutBtn() {
+function LogoutBtn({style}) {
   const navigate = useNavigate()
     const dispatch = useDispatch()
     function logoutHandler(){
@@ -26,7 +26,7 @@ function LogoutBtn() {
     }
   return (
     <button 
-    className='inline-bock px-6 py-2 text-gray-300 duration-200 hover:bg-blue-100 rounded-full hover:text-gray-950'
+    className={`inline-bock px-6 py-2 text-gray-50 bg-violet-600 font-bold rounded-sm ${style}`}
     onClick={logoutHandler}
     >
         Logout

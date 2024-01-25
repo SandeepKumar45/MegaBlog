@@ -27,7 +27,7 @@ function PostForm({ post }) {
             }
             const dbPost = await databaseService.updatePost(post.$id, {
                 ...data,
-                featuredImage: file ? file.$id : undefined
+                featuredImage: file ? file.$id : undefined,
             })
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`)
@@ -40,7 +40,9 @@ function PostForm({ post }) {
                 data.featuredImage = fileId
                 const dbPost = await databaseService.createPost({
                     ...data,
-                    userId: userData.$id
+                    userName: userData.name,
+                    userId: userData.$id,
+                    
                 })
                 if (dbPost) {
                     navigate(`/post/${dbPost.$id}`)
@@ -71,34 +73,52 @@ function PostForm({ post }) {
     }, [watch, setValue, slugTransform])
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+            <div className="w-full sm:w-2/3 sm:px-2">
                 <Input
                     label="Title :"
                     placeholder="Title"
-                    className="mb-4 bg-gray-600 text-gray-50"
+                    className="mb-4 bg-gray-700 text-gray-50"
                     {...register("title", { required: true })}
                 />
                 <Input
                     label="Slug :"
                     placeholder="Slug"
-                    className="mb-4 bg-gray-600 text-gray-50"
+                    className="mb-4 bg-gray-700 text-gray-50"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
-            </div>
-            <div className="w-1/3 px-2">
                 <Input
                     label="Featured Image :"
                     type="file"
-                    className="mb-4 bg-gray-600 text-gray-50"
+                    labelstyle="sm:hidden"
+                    className="sm:hidden mb-4 bg-gray-700 text-gray-50"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
                 {post && (
-                    <div className="w-full mb-4">
+                    <div className="sm:hidden w-full mb-4">
+                        <img
+                            src={storageService.getFilePreview(post.featuredImage)}
+                            alt={post.title}
+                            className="rounded-lg"
+                        />
+                    </div>
+                )}
+                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+            </div>
+            <div className="w-full sm:w-1/3 sm:px-2">
+                <Input
+                    label="Featured Image :"
+                    type="file"
+                    labelstyle="hidden sm:block"
+                    className="hidden sm:block mb-4 bg-gray-700 text-gray-50"
+                    accept="image/png, image/jpg, image/jpeg, image/gif"
+                    {...register("image", { required: !post })}
+                />
+                {post && (
+                    <div className="hidden sm:block w-full mb-4">
                         <img
                             src={storageService.getFilePreview(post.featuredImage)}
                             alt={post.title}
@@ -109,7 +129,7 @@ function PostForm({ post }) {
                 <Select
                     options={["active", "inactive"]}
                     label="Status"
-                    className="mb-4 bg-gray-700 text-gray-50"
+                    className="mt-3 sm:mt-0 mb-4 bg-gray-700 text-gray-50"
                     {...register("status", { required: true })}
                 />
                 <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
